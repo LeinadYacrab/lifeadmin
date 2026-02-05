@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03661AA3CBAF0DE1E02C37F1 /* AudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A54FFA348EB874E1F91CA /* AudioRecorderManager.swift */; };
+		124F100E554BC09BFFD4F180 /* SyncMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D4E47E75A133B6F23231C /* SyncMessage.swift */; };
+		222FF78C5DBADB507D3BE15E /* WatchRecordingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6966F8BA9D9257723248631 /* WatchRecordingsStore.swift */; };
+		271A024EB0CA1113A7DE51C1 /* AudioRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */; };
+		2AF97A190D47634D272751C8 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA6781B254AE425C1FDE27 /* AudioPlayerService.swift */; };
+		2E5DA775443A66960AFFFC5A /* RecordingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492531A81F7A327473CD7F65 /* RecordingIntent.swift */; };
+		33D4A23C85DC0EF0536D3F5E /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD26164BB8E73C059260E70 /* RecordingView.swift */; };
+		480482F5F51488C6691D7FAB /* LifeAdminWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DE555859B358774C33115E /* LifeAdminWatchApp.swift */; };
+		5365228353C15C46D79E9615 /* WatchRecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8249EFBD5F85882A8B2314B6 /* WatchRecordingsListView.swift */; };
+		5A917936920999CCA41BFFA2 /* SyncMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D4E47E75A133B6F23231C /* SyncMessage.swift */; };
+		89602DA8C3B3621AFEB7D1E6 /* PhoneSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006077E7154A7E1E582B6360 /* PhoneSyncManager.swift */; };
+		8B96569A0AD483E803687085 /* AudioRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF17BE1AE747CEEEDF9A469 /* AudioRecordingsView.swift */; };
+		947D2B22285060B36C5A625A /* AudioRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */; };
+		975468D89F04913F84A750B5 /* LifeAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83CA5859003470DACBA460 /* LifeAdminApp.swift */; };
+		A37B3F14034B97BE4ED4E88A /* AudioRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1B5B1549DC50006C70034A /* AudioRecorderService.swift */; };
+		A723D44CC27B84BC95C69660 /* WatchConnectivityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */; };
+		BF49FB4C5D038A93FD247A78 /* RecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B604B8A5E915BF5AE6A5EE9 /* RecordingsListView.swift */; };
+		D7F34728CF7D4E98AE6A6512 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C0BB49A71B2BB1BCE267F /* ContentView.swift */; };
+		E4DE55C7D45189851A9B908F /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95FDAFB5EB0758871568F6 /* RecordingView.swift */; };
+		E566294F77381589EDF774BA /* WatchMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BD39277E2B3F1FC0BB1CC2 /* WatchMainView.swift */; };
+		EA2157FDA558B365D52CFC98 /* WatchConnectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A866E0C9A61B1F9E1A2B249 /* WatchConnectionStatusView.swift */; };
+		EB69A2BECECE4C1BE9C1E3E2 /* WatchConnectivityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */; };
+		FF55A2ADA66C4B7498943A1D /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22DD94BC7818D33BB25B08F /* WatchConnectivityManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		23D39E0029B781F8CB2B5256 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17B5464268177D060D1AAC50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4EA5BF6EE6D25DC8279B58C4;
+			remoteInfo = "LifeAdmin Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		006077E7154A7E1E582B6360 /* PhoneSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSyncManager.swift; sourceTree = "<group>"; };
+		1A866E0C9A61B1F9E1A2B249 /* WatchConnectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectionStatusView.swift; sourceTree = "<group>"; };
+		1B604B8A5E915BF5AE6A5EE9 /* RecordingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsListView.swift; sourceTree = "<group>"; };
+		1D4C0BB49A71B2BB1BCE267F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1DD26164BB8E73C059260E70 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityConstants.swift; sourceTree = "<group>"; };
+		35DE555859B358774C33115E /* LifeAdminWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeAdminWatchApp.swift; sourceTree = "<group>"; };
+		3F9D4E47E75A133B6F23231C /* SyncMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessage.swift; sourceTree = "<group>"; };
+		41BA6781B254AE425C1FDE27 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
+		492531A81F7A327473CD7F65 /* RecordingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingIntent.swift; sourceTree = "<group>"; };
+		5FF17BE1AE747CEEEDF9A469 /* AudioRecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingsView.swift; sourceTree = "<group>"; };
+		72EB06A3F541C808B0DD7BC7 /* LifeAdmin Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LifeAdmin Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		76CADFF1EE2CD49EFC460C73 /* LifeAdmin.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LifeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8249EFBD5F85882A8B2314B6 /* WatchRecordingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRecordingsListView.swift; sourceTree = "<group>"; };
+		AF1B5B1549DC50006C70034A /* AudioRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderService.swift; sourceTree = "<group>"; };
+		BA95FDAFB5EB0758871568F6 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecording.swift; sourceTree = "<group>"; };
+		D22DD94BC7818D33BB25B08F /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		D6966F8BA9D9257723248631 /* WatchRecordingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRecordingsStore.swift; sourceTree = "<group>"; };
+		DA83CA5859003470DACBA460 /* LifeAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeAdminApp.swift; sourceTree = "<group>"; };
+		EE1A54FFA348EB874E1F91CA /* AudioRecorderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderManager.swift; sourceTree = "<group>"; };
+		F5BD39277E2B3F1FC0BB1CC2 /* WatchMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMainView.swift; sourceTree = "<group>"; };
+		F6CAE84D98C7FDD98F0DA346 /* LifeAdmin Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "LifeAdmin Watch App.entitlements"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1D7F5210FBB7A428CBF4D624 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				41BA6781B254AE425C1FDE27 /* AudioPlayerService.swift */,
+				AF1B5B1549DC50006C70034A /* AudioRecorderService.swift */,
+				D22DD94BC7818D33BB25B08F /* WatchConnectivityManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2A9DCF4BCAA73BF9CB12CC7D /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				492531A81F7A327473CD7F65 /* RecordingIntent.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		3BAC8CB0268FECED20470577 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1D4C0BB49A71B2BB1BCE267F /* ContentView.swift */,
+				DA83CA5859003470DACBA460 /* LifeAdminApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4E8581038BE28B9F3E3AC263 /* Recordings */ = {
+			isa = PBXGroup;
+			children = (
+				8249EFBD5F85882A8B2314B6 /* WatchRecordingsListView.swift */,
+			);
+			path = Recordings;
+			sourceTree = "<group>";
+		};
+		5097697B9DA39C68B10D4CE9 /* AudioSync */ = {
+			isa = PBXGroup;
+			children = (
+				5FF17BE1AE747CEEEDF9A469 /* AudioRecordingsView.swift */,
+				1A866E0C9A61B1F9E1A2B249 /* WatchConnectionStatusView.swift */,
+			);
+			path = AudioSync;
+			sourceTree = "<group>";
+		};
+		56B959AFD3B6F3CB5B72E50B /* LifeAdmin Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				F6CAE84D98C7FDD98F0DA346 /* LifeAdmin Watch App.entitlements */,
+				70B99EC0C62EABAECBB5F27D /* App */,
+				F9D4BE9A406C70D8E750237C /* Features */,
+				2A9DCF4BCAA73BF9CB12CC7D /* Intents */,
+				B8487F5C2A0D3939AF918750 /* Services */,
+			);
+			path = "LifeAdmin Watch App";
+			sourceTree = "<group>";
+		};
+		601BE6EF33E7CBD1C562EF28 /* WatchConnectivity */ = {
+			isa = PBXGroup;
+			children = (
+				2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */,
+			);
+			path = WatchConnectivity;
+			sourceTree = "<group>";
+		};
+		70B99EC0C62EABAECBB5F27D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				35DE555859B358774C33115E /* LifeAdminWatchApp.swift */,
+				F5BD39277E2B3F1FC0BB1CC2 /* WatchMainView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7E06EA37AB460547FDE059FA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */,
+				3F9D4E47E75A133B6F23231C /* SyncMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		814E8C072BF9FC2F93F92D6E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7E06EA37AB460547FDE059FA /* Models */,
+				601BE6EF33E7CBD1C562EF28 /* WatchConnectivity */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A4732EA2FEC02DAF8AEAD2E9 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				1DD26164BB8E73C059260E70 /* RecordingView.swift */,
+			);
+			path = Recording;
+			sourceTree = "<group>";
+		};
+		AB24960F1B44E5B8BB2F93A2 /* Recordings */ = {
+			isa = PBXGroup;
+			children = (
+				1B604B8A5E915BF5AE6A5EE9 /* RecordingsListView.swift */,
+			);
+			path = Recordings;
+			sourceTree = "<group>";
+		};
+		B8487F5C2A0D3939AF918750 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				006077E7154A7E1E582B6360 /* PhoneSyncManager.swift */,
+				D6966F8BA9D9257723248631 /* WatchRecordingsStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C17C63BCE4893F48EB51FFF6 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5097697B9DA39C68B10D4CE9 /* AudioSync */,
+				A4732EA2FEC02DAF8AEAD2E9 /* Recording */,
+				AB24960F1B44E5B8BB2F93A2 /* Recordings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		C81F6B4D2932F62C1B38B962 /* AudioRecording */ = {
+			isa = PBXGroup;
+			children = (
+				EE1A54FFA348EB874E1F91CA /* AudioRecorderManager.swift */,
+				BA95FDAFB5EB0758871568F6 /* RecordingView.swift */,
+			);
+			path = AudioRecording;
+			sourceTree = "<group>";
+		};
+		CB95486D919992A2006822C7 = {
+			isa = PBXGroup;
+			children = (
+				F5DE703487E553AE1CED38B0 /* LifeAdmin */,
+				56B959AFD3B6F3CB5B72E50B /* LifeAdmin Watch App */,
+				814E8C072BF9FC2F93F92D6E /* Shared */,
+				DA4ED58129A344CF0260F5CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA4ED58129A344CF0260F5CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				72EB06A3F541C808B0DD7BC7 /* LifeAdmin Watch App.app */,
+				76CADFF1EE2CD49EFC460C73 /* LifeAdmin.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5DE703487E553AE1CED38B0 /* LifeAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				3BAC8CB0268FECED20470577 /* App */,
+				C17C63BCE4893F48EB51FFF6 /* Features */,
+				1D7F5210FBB7A428CBF4D624 /* Services */,
+			);
+			path = LifeAdmin;
+			sourceTree = "<group>";
+		};
+		F9D4BE9A406C70D8E750237C /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				C81F6B4D2932F62C1B38B962 /* AudioRecording */,
+				4E8581038BE28B9F3E3AC263 /* Recordings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4EA5BF6EE6D25DC8279B58C4 /* LifeAdmin Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0808E540A0CCA3BAB6026E96 /* Build configuration list for PBXNativeTarget "LifeAdmin Watch App" */;
+			buildPhases = (
+				4B99557CFAFDA5F2509AC4E7 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "LifeAdmin Watch App";
+			packageProductDependencies = (
+			);
+			productName = "LifeAdmin Watch App";
+			productReference = 72EB06A3F541C808B0DD7BC7 /* LifeAdmin Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		66FB127D2BDAD762EE965E04 /* LifeAdmin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69270D31A1F0684C8C25A25B /* Build configuration list for PBXNativeTarget "LifeAdmin" */;
+			buildPhases = (
+				0784C63A959752CC21D3DC6C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A85EA8EA83DC574EE171188B /* PBXTargetDependency */,
+			);
+			name = LifeAdmin;
+			packageProductDependencies = (
+			);
+			productName = LifeAdmin;
+			productReference = 76CADFF1EE2CD49EFC460C73 /* LifeAdmin.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17B5464268177D060D1AAC50 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					4EA5BF6EE6D25DC8279B58C4 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					66FB127D2BDAD762EE965E04 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B86A1727CAE00B340D10B238 /* Build configuration list for PBXProject "LifeAdmin" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CB95486D919992A2006822C7;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				66FB127D2BDAD762EE965E04 /* LifeAdmin */,
+				4EA5BF6EE6D25DC8279B58C4 /* LifeAdmin Watch App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0784C63A959752CC21D3DC6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AF97A190D47634D272751C8 /* AudioPlayerService.swift in Sources */,
+				A37B3F14034B97BE4ED4E88A /* AudioRecorderService.swift in Sources */,
+				271A024EB0CA1113A7DE51C1 /* AudioRecording.swift in Sources */,
+				8B96569A0AD483E803687085 /* AudioRecordingsView.swift in Sources */,
+				D7F34728CF7D4E98AE6A6512 /* ContentView.swift in Sources */,
+				975468D89F04913F84A750B5 /* LifeAdminApp.swift in Sources */,
+				33D4A23C85DC0EF0536D3F5E /* RecordingView.swift in Sources */,
+				BF49FB4C5D038A93FD247A78 /* RecordingsListView.swift in Sources */,
+				124F100E554BC09BFFD4F180 /* SyncMessage.swift in Sources */,
+				EA2157FDA558B365D52CFC98 /* WatchConnectionStatusView.swift in Sources */,
+				EB69A2BECECE4C1BE9C1E3E2 /* WatchConnectivityConstants.swift in Sources */,
+				FF55A2ADA66C4B7498943A1D /* WatchConnectivityManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B99557CFAFDA5F2509AC4E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03661AA3CBAF0DE1E02C37F1 /* AudioRecorderManager.swift in Sources */,
+				947D2B22285060B36C5A625A /* AudioRecording.swift in Sources */,
+				480482F5F51488C6691D7FAB /* LifeAdminWatchApp.swift in Sources */,
+				89602DA8C3B3621AFEB7D1E6 /* PhoneSyncManager.swift in Sources */,
+				2E5DA775443A66960AFFFC5A /* RecordingIntent.swift in Sources */,
+				E4DE55C7D45189851A9B908F /* RecordingView.swift in Sources */,
+				5A917936920999CCA41BFFA2 /* SyncMessage.swift in Sources */,
+				A723D44CC27B84BC95C69660 /* WatchConnectivityConstants.swift in Sources */,
+				E566294F77381589EDF774BA /* WatchMainView.swift in Sources */,
+				5365228353C15C46D79E9615 /* WatchRecordingsListView.swift in Sources */,
+				222FF78C5DBADB507D3BE15E /* WatchRecordingsStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A85EA8EA83DC574EE171188B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4EA5BF6EE6D25DC8279B58C4 /* LifeAdmin Watch App */;
+			targetProxy = 23D39E0029B781F8CB2B5256 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		36DDFEE1B491F6B836ED25FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LifeAdmin;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LifeAdmin needs microphone access to record voice notes";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lifeadmin.app;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		42D059E52E3E3CAEFE0A133B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LifeAdmin;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LifeAdmin needs microphone access to record voice notes";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lifeadmin.app;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4BB87FDE9CEF7BDEC00B8F30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "LifeAdmin Watch App/LifeAdmin Watch App.entitlements";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LifeAdmin;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LifeAdmin needs microphone access to record voice notes";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.lifeadmin.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKSupportsActionButton = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lifeadmin.app.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		7C56BC94D9DD1695B768C028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		A7AEC4B3982EEA80344A93EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "LifeAdmin Watch App/LifeAdmin Watch App.entitlements";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LifeAdmin;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LifeAdmin needs microphone access to record voice notes";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.lifeadmin.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKSupportsActionButton = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lifeadmin.app.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		D847D2C6404897C765C66144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0808E540A0CCA3BAB6026E96 /* Build configuration list for PBXNativeTarget "LifeAdmin Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BB87FDE9CEF7BDEC00B8F30 /* Debug */,
+				A7AEC4B3982EEA80344A93EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		69270D31A1F0684C8C25A25B /* Build configuration list for PBXNativeTarget "LifeAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42D059E52E3E3CAEFE0A133B /* Debug */,
+				36DDFEE1B491F6B836ED25FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B86A1727CAE00B340D10B238 /* Build configuration list for PBXProject "LifeAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D847D2C6404897C765C66144 /* Debug */,
+				7C56BC94D9DD1695B768C028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17B5464268177D060D1AAC50 /* Project object */;
+}

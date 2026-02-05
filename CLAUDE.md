@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**Important:** Check `LEARNINGS.md` for quick-hit lessons and gotchas before making changes.
+
 ## Project Overview
 
 LifeAdmin is an iOS + watchOS app for voice-driven life administration. The app serves as a portal to life management through AI, working primarily through unstructured voice notes and voice chat interactions that fan out to backend services (todo-list, personal CRM, etc.).
