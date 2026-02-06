@@ -4,6 +4,26 @@
 //
 //  Manages WatchConnectivity session for sending audio files to iPhone
 //
+//  ## Auto-Sync Protocol
+//
+//  This manager implements an efficient, event-driven sync protocol:
+//
+//  ### Trigger Events (not polling):
+//  1. `sessionReachabilityDidChange` - when phone becomes reachable
+//  2. `activationDidCompleteWith` - when app starts and session activates
+//
+//  ### Efficiency Measures:
+//  - **No polling**: Purely event-driven, only syncs on connectivity events
+//  - **No duplicates**: Checks `outstandingFileTransfers` before queuing
+//  - **Debounced**: 0.5s delay coalesces rapid reconnect events
+//  - **Background-reliable**: Uses `transferFile` which the OS retries automatically
+//
+//  ### Why transferFile (not sendMessage):
+//  - `sendMessage` requires both devices to be active simultaneously
+//  - `transferFile` queues transfers and delivers in background
+//  - OS handles network-level retries transparently
+//  - Survives app suspension (but not termination, hence auto-retry on activate)
+//
 
 import Foundation
 import WatchConnectivity
@@ -21,6 +41,12 @@ class PhoneSyncManager: NSObject, ObservableObject {
     private var pendingChecksums: [String: String] = [:] {
         didSet { savePendingChecksums() }
     }
+
+    /// Tracks whether we've already scheduled an auto-sync (for debouncing)
+    private var autoSyncScheduled = false
+
+    /// Minimum delay between auto-sync attempts (debounce)
+    private let autoSyncDebounceInterval: TimeInterval = 0.5
 
     private var pendingChecksumsFileURL: URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -110,12 +136,25 @@ extension PhoneSyncManager: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         Task { @MainActor in
             self.isPhoneReachable = session.isReachable
+
+            // Auto-sync on app startup if session activated successfully
+            if activationState == .activated {
+                print("AutoSync: Session activated, scheduling sync")
+                self.scheduleAutoSync()
+            }
         }
     }
 
     nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         Task { @MainActor in
+            let wasReachable = self.isPhoneReachable
             self.isPhoneReachable = session.isReachable
+
+            // Auto-sync when phone becomes reachable (transition from unreachable to reachable)
+            if !wasReachable && session.isReachable {
+                print("AutoSync: Phone became reachable, scheduling sync")
+                self.scheduleAutoSync()
+            }
         }
     }
 
@@ -180,8 +219,57 @@ extension PhoneSyncManager: WCSessionDelegate {
         }
     }
 
-    /// Retries syncing all pending recordings
+    /// Retries syncing all pending recordings that aren't already in-flight
     func retrySyncPendingRecordings() {
-        WatchRecordingsStore.shared.syncPendingRecordings()
+        guard let session = session, session.activationState == .activated else {
+            print("AutoSync: Session not activated, skipping")
+            return
+        }
+
+        // Get IDs of recordings already being transferred
+        let inFlightIds = Set(session.outstandingFileTransfers.compactMap { transfer -> String? in
+            transfer.file.metadata?[WatchConnectivityConstants.FileMetadataKey.recordingId.rawValue] as? String
+        })
+
+        let pendingRecordings = WatchRecordingsStore.shared.pendingSync
+        var syncedCount = 0
+
+        for url in pendingRecordings {
+            let recordingId = WatchRecordingsStore.shared.recordingIdFromURL(url)
+
+            // Skip if already in-flight
+            if inFlightIds.contains(recordingId) {
+                print("AutoSync: \(recordingId) already in-flight, skipping")
+                continue
+            }
+
+            // Skip if file doesn't exist (was deleted)
+            guard FileManager.default.fileExists(atPath: url.path) else {
+                print("AutoSync: \(recordingId) file missing, removing from pending")
+                WatchRecordingsStore.shared.markAsSynced(url: url)
+                continue
+            }
+
+            sendAudioFile(url: url, recordingId: recordingId)
+            syncedCount += 1
+        }
+
+        if syncedCount > 0 {
+            print("AutoSync: Queued \(syncedCount) recording(s) for sync")
+        }
+    }
+
+    /// Schedules an auto-sync with debouncing to prevent rapid-fire retries
+    private func scheduleAutoSync() {
+        guard !autoSyncScheduled else { return }
+        autoSyncScheduled = true
+
+        Task {
+            try? await Task.sleep(nanoseconds: UInt64(autoSyncDebounceInterval * 1_000_000_000))
+            await MainActor.run {
+                self.autoSyncScheduled = false
+                self.retrySyncPendingRecordings()
+            }
+        }
     }
 }

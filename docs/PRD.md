@@ -101,6 +101,48 @@ This document captures key design decisions and requirements for the LifeAdmin a
 - When connectivity restored, pending recordings are automatically synced
 - Recordings persist on Watch until iPhone confirms receipt
 
+### 3.3 Auto-Sync Protocol
+
+**Requirement:** Pending recordings must sync automatically when connectivity is restored, without polling or manual intervention.
+
+**Rationale:**
+- Users shouldn't need to manually trigger sync
+- Polling would drain Watch battery
+- Must handle app restarts gracefully (pending state persisted to disk)
+
+**Protocol Design - Event-Driven, Not Polling:**
+
+| Trigger Event | When It Fires | Action |
+|---------------|---------------|--------|
+| `activationDidCompleteWith` | App starts, session activates | Schedule auto-sync |
+| `sessionReachabilityDidChange` | Phone becomes reachable | Schedule auto-sync (if transition from unreachable→reachable) |
+
+**Why These Events:**
+- `activationDidCompleteWith`: Handles app restart case. If app was terminated with pending syncs, this re-queues them.
+- `sessionReachabilityDidChange`: Handles connectivity restoration. When Watch regains contact with iPhone, pending syncs resume.
+
+**Efficiency Measures:**
+
+1. **No Polling**: Purely event-driven. No timers, no periodic checks.
+
+2. **Debouncing** (0.5s): Rapid reconnect events are coalesced. If connectivity flaps, we don't spam sync attempts.
+
+3. **Duplicate Prevention**: Before queuing a transfer, we check `WCSession.outstandingFileTransfers` to see if that recording is already in-flight. Avoids re-sending files the OS is already transferring.
+
+4. **Background-Reliable Transfers**: Uses `transferFile()` instead of `sendMessage()`:
+   - `sendMessage()` requires both apps active simultaneously
+   - `transferFile()` queues transfers for background delivery
+   - OS handles network-level retries automatically
+   - Survives app suspension (but not termination)
+
+**Why Not Use `sendMessage()`:**
+- Requires iPhone app to be reachable at the exact moment of send
+- Watch app may be suspended before delivery completes
+- Not suitable for large audio files
+
+**Key Files:**
+- `LifeAdmin Watch App/Services/PhoneSyncManager.swift` - Auto-sync implementation
+
 ## 4. Security Considerations
 
 ### 4.1 Local Storage
@@ -118,4 +160,4 @@ This document captures key design decisions and requirements for the LifeAdmin a
 ---
 
 *Last updated: 2026-02-06*
-*Version: 1.0*
+*Version: 1.1 - Added auto-sync protocol documentation*
