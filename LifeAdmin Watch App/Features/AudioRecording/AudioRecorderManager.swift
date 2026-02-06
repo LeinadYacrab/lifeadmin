@@ -44,7 +44,7 @@ class AudioRecorderManager: NSObject, ObservableObject {
         // Start extended runtime session to keep recording in background
         startExtendedRuntimeSession()
 
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording_\(Date().timeIntervalSince1970).m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent(RecordingIdGenerator.generateFilename(for: .watch))
         currentRecordingURL = audioFilename
 
         let settings: [String: Any] = [
@@ -79,8 +79,9 @@ class AudioRecorderManager: NSObject, ObservableObject {
         if let recordingURL = currentRecordingURL {
             // Save to persistent storage
             if let savedURL = WatchRecordingsStore.shared.addRecording(from: recordingURL) {
-                // Send to iPhone
-                PhoneSyncManager.shared.sendAudioFile(url: savedURL)
+                // Send to iPhone with recording ID for checksum verification
+                let recordingId = WatchRecordingsStore.shared.recordingIdFromURL(savedURL)
+                PhoneSyncManager.shared.sendAudioFile(url: savedURL, recordingId: recordingId)
             }
             // Clean up the temporary recording file
             try? FileManager.default.removeItem(at: recordingURL)

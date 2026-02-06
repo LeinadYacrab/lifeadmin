@@ -10,6 +10,13 @@ import XCTest
 
 final class WatchConnectivityConstantsTests: XCTestCase {
 
+    // MARK: - Message Type Tests
+
+    func testMessageTypeRawValues() {
+        XCTAssertEqual(WatchConnectivityConstants.MessageType.syncConfirmation.rawValue, "syncConfirmation")
+        XCTAssertEqual(WatchConnectivityConstants.MessageType.syncFailure.rawValue, "syncFailure")
+    }
+
     // MARK: - Message Key Tests
 
     func testMessageKeyRawValues() {
@@ -20,6 +27,7 @@ final class WatchConnectivityConstantsTests: XCTestCase {
         XCTAssertEqual(WatchConnectivityConstants.MessageKey.duration.rawValue, "duration")
         XCTAssertEqual(WatchConnectivityConstants.MessageKey.status.rawValue, "status")
         XCTAssertEqual(WatchConnectivityConstants.MessageKey.errorMessage.rawValue, "errorMessage")
+        XCTAssertEqual(WatchConnectivityConstants.MessageKey.checksum.rawValue, "checksum")
     }
 
     // MARK: - File Metadata Key Tests
@@ -29,6 +37,7 @@ final class WatchConnectivityConstantsTests: XCTestCase {
         XCTAssertEqual(WatchConnectivityConstants.FileMetadataKey.timestamp.rawValue, "timestamp")
         XCTAssertEqual(WatchConnectivityConstants.FileMetadataKey.recordingId.rawValue, "recordingId")
         XCTAssertEqual(WatchConnectivityConstants.FileMetadataKey.duration.rawValue, "duration")
+        XCTAssertEqual(WatchConnectivityConstants.FileMetadataKey.checksum.rawValue, "checksum")
     }
 
     // MARK: - File Type Tests
@@ -60,6 +69,10 @@ final class WatchConnectivityConstantsTests: XCTestCase {
         XCTAssertEqual(
             WatchConnectivityConstants.MessageKey.duration.rawValue,
             WatchConnectivityConstants.FileMetadataKey.duration.rawValue
+        )
+        XCTAssertEqual(
+            WatchConnectivityConstants.MessageKey.checksum.rawValue,
+            WatchConnectivityConstants.FileMetadataKey.checksum.rawValue
         )
     }
 }

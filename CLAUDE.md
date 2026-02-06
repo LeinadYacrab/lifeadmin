@@ -163,3 +163,17 @@ When creating the Xcode project, configure the following:
 - Watch stores recordings locally with pending sync tracking for offline support
 - Once synced to iPhone, Watch copies can be removed (iPhone is source of truth)
 - **Recordings are permanent** - never auto-delete user data (see LEARNINGS.md)
+- **Commit and push regularly** - don't let work pile up locally
+
+## Version Control
+
+**Commit early and often.** Push to remote regularly to avoid losing work.
+
+```bash
+# Standard commit workflow
+git add -A
+git commit -m "Your commit message"
+git push
+```
+
+Design decisions should be documented in `docs/PRD.md`.

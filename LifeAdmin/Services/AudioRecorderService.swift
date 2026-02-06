@@ -60,7 +60,7 @@ class AudioRecorderService: NSObject, ObservableObject {
 
         setupAudioSession()
 
-        let audioFilename = getAudioDirectory().appendingPathComponent("recording_\(Date().timeIntervalSince1970).m4a")
+        let audioFilename = getAudioDirectory().appendingPathComponent(RecordingIdGenerator.generateFilename(for: .iphone))
         currentRecordingURL = audioFilename
 
         let settings: [String: Any] = [

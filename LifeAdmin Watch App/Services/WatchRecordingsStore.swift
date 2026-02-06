@@ -106,6 +106,23 @@ class WatchRecordingsStore: ObservableObject {
         savePendingSync()
     }
 
+    /// Marks a recording as synced by its recording ID (filename without extension)
+    func markAsSyncedById(_ recordingId: String) {
+        if let url = findRecordingById(recordingId) {
+            markAsSynced(url: url)
+        }
+    }
+
+    /// Finds a recording URL by its ID (filename without extension)
+    func findRecordingById(_ recordingId: String) -> URL? {
+        return recordings.first { recordingIdFromURL($0) == recordingId }
+    }
+
+    /// Extracts recording ID from URL (filename without extension)
+    func recordingIdFromURL(_ url: URL) -> String {
+        return RecordingIdGenerator.extractId(from: url)
+    }
+
     /// Deletes a recording
     func deleteRecording(url: URL) {
         try? fileManager.removeItem(at: url)
@@ -117,7 +134,8 @@ class WatchRecordingsStore: ObservableObject {
     /// Syncs all pending recordings to iPhone
     func syncPendingRecordings() {
         for url in pendingSync {
-            PhoneSyncManager.shared.sendAudioFile(url: url)
+            let recordingId = recordingIdFromURL(url)
+            PhoneSyncManager.shared.sendAudioFile(url: url, recordingId: recordingId)
         }
     }
 

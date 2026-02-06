@@ -93,6 +93,11 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        // Extract metadata
+        let metadata = file.metadata ?? [:]
+        let recordingId = metadata[WatchConnectivityConstants.FileMetadataKey.recordingId.rawValue] as? String
+        let expectedChecksum = metadata[WatchConnectivityConstants.FileMetadataKey.checksum.rawValue] as? String
+
         // Handle received audio file from Watch
         let audioDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             .appendingPathComponent("AudioRecordings", isDirectory: true)
@@ -109,11 +114,72 @@ extension WatchConnectivityManager: WCSessionDelegate {
             }
             try FileManager.default.copyItem(at: file.fileURL, to: destinationURL)
 
-            Task { @MainActor in
-                self.receivedAudioFiles.insert(destinationURL, at: 0)
+            // Verify checksum if provided
+            if let expectedChecksum = expectedChecksum, let recordingId = recordingId {
+                if let actualChecksum = FileChecksum.sha256(of: destinationURL) {
+                    if actualChecksum.lowercased() == expectedChecksum.lowercased() {
+                        // Checksum verified - send confirmation
+                        sendSyncConfirmation(session: session, recordingId: recordingId, checksum: actualChecksum)
+                        Task { @MainActor in
+                            self.receivedAudioFiles.insert(destinationURL, at: 0)
+                        }
+                    } else {
+                        // Checksum mismatch - delete corrupted file and notify Watch
+                        try? FileManager.default.removeItem(at: destinationURL)
+                        sendSyncFailure(session: session, recordingId: recordingId, error: "Checksum mismatch: expected \(expectedChecksum), got \(actualChecksum)")
+                    }
+                } else {
+                    // Couldn't compute checksum - delete and notify
+                    try? FileManager.default.removeItem(at: destinationURL)
+                    sendSyncFailure(session: session, recordingId: recordingId, error: "Failed to compute checksum of received file")
+                }
+            } else {
+                // Legacy transfer without checksum - accept but log warning
+                print("Warning: Received file without checksum verification")
+                Task { @MainActor in
+                    self.receivedAudioFiles.insert(destinationURL, at: 0)
+                }
             }
         } catch {
             print("Error saving received audio file: \(error)")
+            if let recordingId = recordingId {
+                sendSyncFailure(session: session, recordingId: recordingId, error: error.localizedDescription)
+            }
+        }
+    }
+
+    /// Sends sync confirmation to Watch with verified checksum
+    private nonisolated func sendSyncConfirmation(session: WCSession, recordingId: String, checksum: String) {
+        let message: [String: Any] = [
+            WatchConnectivityConstants.MessageKey.messageType.rawValue: WatchConnectivityConstants.MessageType.syncConfirmation.rawValue,
+            WatchConnectivityConstants.MessageKey.recordingId.rawValue: recordingId,
+            WatchConnectivityConstants.MessageKey.checksum.rawValue: checksum
+        ]
+
+        if session.isReachable {
+            session.sendMessage(message, replyHandler: nil) { error in
+                print("Failed to send sync confirmation: \(error)")
+            }
+        } else {
+            // Queue message for later delivery via application context
+            try? session.updateApplicationContext(message)
+        }
+    }
+
+    /// Sends sync failure notification to Watch
+    private nonisolated func sendSyncFailure(session: WCSession, recordingId: String, error: String) {
+        let message: [String: Any] = [
+            WatchConnectivityConstants.MessageKey.messageType.rawValue: WatchConnectivityConstants.MessageType.syncFailure.rawValue,
+            WatchConnectivityConstants.MessageKey.recordingId.rawValue: recordingId,
+            WatchConnectivityConstants.MessageKey.errorMessage.rawValue: error
+        ]
+
+        if session.isReachable {
+            session.sendMessage(message, replyHandler: nil) { error in
+                print("Failed to send sync failure: \(error)")
+            }
+        } else {
+            try? session.updateApplicationContext(message)
         }
     }
 }

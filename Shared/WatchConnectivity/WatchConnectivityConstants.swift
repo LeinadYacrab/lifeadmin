@@ -9,6 +9,14 @@ import Foundation
 
 /// Constants used for Watch-iPhone communication
 enum WatchConnectivityConstants {
+    /// Message types for Watch-iPhone communication
+    enum MessageType: String {
+        /// iPhone confirms successful receipt and verification of a recording
+        case syncConfirmation = "syncConfirmation"
+        /// iPhone reports sync failure
+        case syncFailure = "syncFailure"
+    }
+
     /// Message keys
     enum MessageKey: String {
         case messageType = "messageType"
@@ -18,6 +26,7 @@ enum WatchConnectivityConstants {
         case duration = "duration"
         case status = "status"
         case errorMessage = "errorMessage"
+        case checksum = "checksum"
     }
 
     /// File transfer metadata keys
@@ -26,6 +35,7 @@ enum WatchConnectivityConstants {
         case timestamp = "timestamp"
         case recordingId = "recordingId"
         case duration = "duration"
+        case checksum = "checksum"
     }
 
     /// File types
