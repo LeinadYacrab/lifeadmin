@@ -6,14 +6,21 @@
 //
 //  ## Auto-Sync Protocol
 //
-//  This manager implements an efficient, event-driven sync protocol:
+//  This manager implements an efficient, event-driven sync protocol with fallback:
 //
-//  ### Trigger Events (not polling):
+//  ### Primary Triggers (event-driven, no polling):
 //  1. `sessionReachabilityDidChange` - when phone becomes reachable
 //  2. `activationDidCompleteWith` - when app starts and session activates
+//  3. `onAppForeground()` - when app comes to foreground
+//
+//  ### Fallback Trigger (defensive polling):
+//  4. 5-minute timer - ONLY runs when pending recordings exist
+//     - Catches edge cases where events don't fire (stale session, etc.)
+//     - Automatically stops when no pending items remain
+//     - Minimal battery impact due to long interval and conditional activation
 //
 //  ### Efficiency Measures:
-//  - **No polling**: Purely event-driven, only syncs on connectivity events
+//  - **Mostly event-driven**: Timer only active when needed
 //  - **No duplicates**: Checks `outstandingFileTransfers` before queuing
 //  - **Debounced**: 0.5s delay coalesces rapid reconnect events
 //  - **Background-reliable**: Uses `transferFile` which the OS retries automatically
@@ -48,6 +55,13 @@ class PhoneSyncManager: NSObject, ObservableObject {
     /// Minimum delay between auto-sync attempts (debounce)
     private let autoSyncDebounceInterval: TimeInterval = 0.5
 
+    /// Fallback polling interval when pending recordings exist (5 minutes)
+    /// This catches edge cases where events don't fire (stale session, etc.)
+    private let fallbackSyncInterval: TimeInterval = 5 * 60
+
+    /// Fallback timer task - only runs when pending recordings exist
+    private var fallbackTimerTask: Task<Void, Never>?
+
     private var pendingChecksumsFileURL: URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return documentsDirectory.appendingPathComponent("pendingChecksums.json")
@@ -62,6 +76,9 @@ class PhoneSyncManager: NSObject, ObservableObject {
             session?.delegate = self
             session?.activate()
         }
+
+        // Start fallback timer if we have pending items from a previous session
+        updateFallbackTimer()
     }
 
     private func loadPendingChecksums() {
@@ -269,7 +286,64 @@ extension PhoneSyncManager: WCSessionDelegate {
             await MainActor.run {
                 self.autoSyncScheduled = false
                 self.retrySyncPendingRecordings()
+                self.updateFallbackTimer()
             }
         }
+    }
+
+    // MARK: - Fallback Timer
+
+    /// Updates the fallback timer based on pending sync state.
+    /// Timer runs only when pending recordings exist to avoid unnecessary battery drain.
+    private func updateFallbackTimer() {
+        let hasPending = !WatchRecordingsStore.shared.pendingSync.isEmpty
+
+        if hasPending && fallbackTimerTask == nil {
+            // Start fallback timer
+            startFallbackTimer()
+        } else if !hasPending && fallbackTimerTask != nil {
+            // Stop fallback timer - nothing pending
+            stopFallbackTimer()
+        }
+    }
+
+    private func startFallbackTimer() {
+        guard fallbackTimerTask == nil else { return }
+
+        print("FallbackSync: Starting 5-minute fallback timer")
+        fallbackTimerTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: UInt64(fallbackSyncInterval * 1_000_000_000))
+
+                guard !Task.isCancelled else { break }
+
+                await MainActor.run {
+                    let pendingCount = WatchRecordingsStore.shared.pendingSync.count
+                    if pendingCount > 0 {
+                        print("FallbackSync: Timer fired, \(pendingCount) pending recording(s)")
+                        self.retrySyncPendingRecordings()
+                    } else {
+                        // No more pending - stop the timer
+                        print("FallbackSync: No pending recordings, stopping timer")
+                        self.stopFallbackTimer()
+                    }
+                }
+            }
+        }
+    }
+
+    private func stopFallbackTimer() {
+        fallbackTimerTask?.cancel()
+        fallbackTimerTask = nil
+        print("FallbackSync: Timer stopped")
+    }
+
+    // MARK: - Public Triggers
+
+    /// Call this when app comes to foreground to ensure pending syncs are attempted.
+    /// This handles the case where the app was backgrounded and events may have been missed.
+    func onAppForeground() {
+        print("AutoSync: App came to foreground")
+        scheduleAutoSync()
     }
 }

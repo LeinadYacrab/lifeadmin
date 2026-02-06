@@ -110,16 +110,27 @@ This document captures key design decisions and requirements for the LifeAdmin a
 - Polling would drain Watch battery
 - Must handle app restarts gracefully (pending state persisted to disk)
 
-**Protocol Design - Event-Driven, Not Polling:**
+**Protocol Design - Event-Driven with Defensive Fallback:**
 
-| Trigger Event | When It Fires | Action |
-|---------------|---------------|--------|
-| `activationDidCompleteWith` | App starts, session activates | Schedule auto-sync |
-| `sessionReachabilityDidChange` | Phone becomes reachable | Schedule auto-sync (if transition from unreachable→reachable) |
+| Trigger | Type | When It Fires | Action |
+|---------|------|---------------|--------|
+| `activationDidCompleteWith` | Event | App starts, session activates | Schedule auto-sync |
+| `sessionReachabilityDidChange` | Event | Phone becomes reachable | Schedule auto-sync (if transition from unreachable→reachable) |
+| `scenePhase → .active` | Event | App comes to foreground | Schedule auto-sync |
+| 5-minute timer | Fallback | Every 5 min while pending items exist | Retry sync |
 
 **Why These Events:**
 - `activationDidCompleteWith`: Handles app restart case. If app was terminated with pending syncs, this re-queues them.
 - `sessionReachabilityDidChange`: Handles connectivity restoration. When Watch regains contact with iPhone, pending syncs resume.
+- `scenePhase`: Handles missed events while backgrounded. User raising wrist triggers sync check.
+
+**Why the Fallback Timer:**
+Edge cases where events might not fire:
+- Session gets into stale state
+- Phone was already reachable on launch (no transition event)
+- Bluetooth glitch where reachability doesn't update
+
+The timer ONLY runs when `pendingSync` is non-empty, and automatically stops when all recordings are synced. This prevents battery drain when there's nothing to sync.
 
 **Efficiency Measures:**
 
@@ -160,4 +171,4 @@ This document captures key design decisions and requirements for the LifeAdmin a
 ---
 
 *Last updated: 2026-02-06*
-*Version: 1.1 - Added auto-sync protocol documentation*
+*Version: 1.2 - Added fallback timer and foreground sync trigger*
