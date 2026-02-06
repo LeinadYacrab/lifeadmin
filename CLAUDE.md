@@ -47,18 +47,42 @@ Acceptance criteria:
 
 ## Build & Run Commands
 
+### Quick Commands (use these)
 ```bash
+# Run all tests (39 tests)
+./scripts/run-tests.sh
+
+# Build iOS and watchOS
+./scripts/build.sh
+
+# Build iOS only
+./scripts/build.sh ios
+
+# Build watchOS only
+./scripts/build.sh watch
+
+# Regenerate Xcode project from project.yml
+xcodegen generate
+
 # Open project in Xcode
 open LifeAdmin.xcodeproj
+```
 
-# Build from command line
-xcodebuild -scheme "LifeAdmin" -destination "platform=iOS Simulator,name=iPhone 15 Pro" build
+### Manual xcodebuild Commands
+```bash
+# Build iOS app
+xcodebuild -scheme "LifeAdmin" -destination "platform=iOS Simulator,name=iPhone 14 Pro Max" build
 
-# Build watch app
-xcodebuild -scheme "LifeAdmin Watch App" -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" build
+# Build Watch app
+xcodebuild -scheme "LifeAdmin Watch App" -destination "generic/platform=watchOS Simulator" CODE_SIGNING_ALLOWED=NO build
 
 # Run tests
-xcodebuild -scheme "LifeAdmin" -destination "platform=iOS Simulator,name=iPhone 15 Pro" test
+xcodebuild -scheme "LifeAdmin" -destination "platform=iOS Simulator,name=iPhone 14 Pro Max" test
+```
+
+**Note:** For unprivileged users, set `DEVELOPER_DIR` first:
+```bash
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 ```
 
 ## Architecture
@@ -80,9 +104,17 @@ LifeAdmin/
 │   │   └── Recordings/           # Watch recordings list
 │   ├── Intents/                  # App Intents for Action Button
 │   └── Services/                 # Phone sync, recordings store
-└── Shared/                       # Code shared between iOS and watchOS
-    ├── Models/                   # Shared data models
-    └── WatchConnectivity/        # Shared connectivity protocols
+├── Shared/                       # Code shared between iOS and watchOS
+│   ├── Models/                   # Shared data models
+│   └── WatchConnectivity/        # Shared connectivity protocols
+├── LifeAdminTests/               # Unit tests (39 tests)
+│   ├── Models/                   # Model tests
+│   ├── Services/                 # Service tests
+│   └── Mocks/                    # Mock objects for testing
+├── scripts/                      # Build and test scripts
+│   ├── run-tests.sh              # Run all unit tests
+│   └── build.sh                  # Build iOS/watchOS
+└── project.yml                   # XcodeGen project definition
 ```
 
 ## Key Technologies
