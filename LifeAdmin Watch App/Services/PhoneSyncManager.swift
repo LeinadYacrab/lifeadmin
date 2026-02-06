@@ -112,13 +112,7 @@ class PhoneSyncManager: NSObject, ObservableObject {
 
         pendingTransfers += 1
 
-        let metadata: [String: Any] = [
-            WatchConnectivityConstants.FileMetadataKey.type.rawValue: WatchConnectivityConstants.FileType.audioRecording.rawValue,
-            WatchConnectivityConstants.FileMetadataKey.timestamp.rawValue: Date().timeIntervalSince1970,
-            WatchConnectivityConstants.FileMetadataKey.recordingId.rawValue: recordingId,
-            WatchConnectivityConstants.FileMetadataKey.checksum.rawValue: checksum
-        ]
-
+        let metadata = SyncMessageParser.createTransferMetadata(recordingId: recordingId, checksum: checksum)
         session.transferFile(url, metadata: metadata)
     }
 
@@ -211,28 +205,17 @@ extension PhoneSyncManager: WCSessionDelegate {
     }
 
     private func handleIncomingMessage(_ message: [String: Any]) {
-        guard let messageTypeRaw = message[WatchConnectivityConstants.MessageKey.messageType.rawValue] as? String else {
-            print("Received message without messageType")
-            return
-        }
+        let parsed = SyncMessageParser.parse(message)
 
-        guard let recordingId = message[WatchConnectivityConstants.MessageKey.recordingId.rawValue] as? String else {
-            print("Received message without recordingId")
-            return
-        }
+        switch parsed {
+        case .syncConfirmation(let recordingId, let checksum):
+            handleSyncConfirmation(recordingId: recordingId, verifiedChecksum: checksum)
 
-        switch messageTypeRaw {
-        case WatchConnectivityConstants.MessageType.syncConfirmation.rawValue:
-            if let checksum = message[WatchConnectivityConstants.MessageKey.checksum.rawValue] as? String {
-                handleSyncConfirmation(recordingId: recordingId, verifiedChecksum: checksum)
-            }
-
-        case WatchConnectivityConstants.MessageType.syncFailure.rawValue:
-            let errorMessage = message[WatchConnectivityConstants.MessageKey.errorMessage.rawValue] as? String ?? "Unknown error"
+        case .syncFailure(let recordingId, let errorMessage):
             handleSyncFailure(recordingId: recordingId, errorMessage: errorMessage)
 
-        default:
-            print("Unknown message type: \(messageTypeRaw)")
+        case .invalid(let reason):
+            print("Invalid sync message: \(reason)")
         }
     }
 

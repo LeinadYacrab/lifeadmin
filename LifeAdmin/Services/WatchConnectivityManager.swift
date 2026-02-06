@@ -93,10 +93,10 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceive file: WCSessionFile) {
-        // Extract metadata
-        let metadata = file.metadata ?? [:]
-        let recordingId = metadata[WatchConnectivityConstants.FileMetadataKey.recordingId.rawValue] as? String
-        let expectedChecksum = metadata[WatchConnectivityConstants.FileMetadataKey.checksum.rawValue] as? String
+        // Extract metadata using parser
+        let parsedMetadata = SyncMessageParser.parseTransferMetadata(file.metadata)
+        let recordingId = parsedMetadata?.recordingId
+        let expectedChecksum = parsedMetadata?.checksum
 
         // Handle received audio file from Watch
         let audioDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -150,11 +150,7 @@ extension WatchConnectivityManager: WCSessionDelegate {
 
     /// Sends sync confirmation to Watch with verified checksum
     private nonisolated func sendSyncConfirmation(session: WCSession, recordingId: String, checksum: String) {
-        let message: [String: Any] = [
-            WatchConnectivityConstants.MessageKey.messageType.rawValue: WatchConnectivityConstants.MessageType.syncConfirmation.rawValue,
-            WatchConnectivityConstants.MessageKey.recordingId.rawValue: recordingId,
-            WatchConnectivityConstants.MessageKey.checksum.rawValue: checksum
-        ]
+        let message = SyncMessageParser.createConfirmationMessage(recordingId: recordingId, checksum: checksum)
 
         if session.isReachable {
             session.sendMessage(message, replyHandler: nil) { error in
@@ -168,15 +164,11 @@ extension WatchConnectivityManager: WCSessionDelegate {
 
     /// Sends sync failure notification to Watch
     private nonisolated func sendSyncFailure(session: WCSession, recordingId: String, error: String) {
-        let message: [String: Any] = [
-            WatchConnectivityConstants.MessageKey.messageType.rawValue: WatchConnectivityConstants.MessageType.syncFailure.rawValue,
-            WatchConnectivityConstants.MessageKey.recordingId.rawValue: recordingId,
-            WatchConnectivityConstants.MessageKey.errorMessage.rawValue: error
-        ]
+        let message = SyncMessageParser.createFailureMessage(recordingId: recordingId, error: error)
 
         if session.isReachable {
-            session.sendMessage(message, replyHandler: nil) { error in
-                print("Failed to send sync failure: \(error)")
+            session.sendMessage(message, replyHandler: nil) { sendError in
+                print("Failed to send sync failure: \(sendError)")
             }
         } else {
             try? session.updateApplicationContext(message)

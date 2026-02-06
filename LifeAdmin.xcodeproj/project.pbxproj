@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03661AA3CBAF0DE1E02C37F1 /* AudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A54FFA348EB874E1F91CA /* AudioRecorderManager.swift */; };
+		0F4F72ED0011166E72C92B37 /* SyncStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55FE7A7462F53F1067ACAE0 /* SyncStateManagerTests.swift */; };
 		124F100E554BC09BFFD4F180 /* SyncMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D4E47E75A133B6F23231C /* SyncMessage.swift */; };
 		196AE608AEE34B834B102500 /* RecordingIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F71027A9AFCF31E1C021BE /* RecordingIdGenerator.swift */; };
 		222FF78C5DBADB507D3BE15E /* WatchRecordingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6966F8BA9D9257723248631 /* WatchRecordingsStore.swift */; };
@@ -16,8 +17,10 @@
 		2AF97A190D47634D272751C8 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA6781B254AE425C1FDE27 /* AudioPlayerService.swift */; };
 		2E5DA775443A66960AFFFC5A /* RecordingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492531A81F7A327473CD7F65 /* RecordingIntent.swift */; };
 		33D4A23C85DC0EF0536D3F5E /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD26164BB8E73C059260E70 /* RecordingView.swift */; };
+		394DD1E9797EDF7A9688F007 /* SyncStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09561ED71D83A4DA0AAE7258 /* SyncStateManager.swift */; };
 		480482F5F51488C6691D7FAB /* LifeAdminWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DE555859B358774C33115E /* LifeAdminWatchApp.swift */; };
 		495AB02C586BFA2AC95EBA69 /* FileChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04916126E45E39821092CFD /* FileChecksum.swift */; };
+		510DC1BC0D469F2ECA7DB028 /* SyncMessageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BE3C6B682BD5713D8E705B /* SyncMessageParser.swift */; };
 		53434F4312EAFF1DE5F65DA4 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D52A469EA16F8B70BBA7094 /* TestHelpers.swift */; };
 		5365228353C15C46D79E9615 /* WatchRecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8249EFBD5F85882A8B2314B6 /* WatchRecordingsListView.swift */; };
 		5A917936920999CCA41BFFA2 /* SyncMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D4E47E75A133B6F23231C /* SyncMessage.swift */; };
@@ -29,11 +32,13 @@
 		919211A373111DC700D4866D /* RecordingIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F71027A9AFCF31E1C021BE /* RecordingIdGenerator.swift */; };
 		947D2B22285060B36C5A625A /* AudioRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */; };
 		975468D89F04913F84A750B5 /* LifeAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83CA5859003470DACBA460 /* LifeAdminApp.swift */; };
+		9BC712B43EFE8683E37546FB /* SyncMessageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BE3C6B682BD5713D8E705B /* SyncMessageParser.swift */; };
 		A37B3F14034B97BE4ED4E88A /* AudioRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1B5B1549DC50006C70034A /* AudioRecorderService.swift */; };
 		A723D44CC27B84BC95C69660 /* WatchConnectivityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */; };
 		B2CFD28C02FCAB88208FE911 /* AudioRecorderServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C0C98B65977556474EDAAD /* AudioRecorderServiceTests.swift */; };
 		BBCFC3E378308E75F1E3FC24 /* SyncMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19938B184A7846129DC25B94 /* SyncMessageTests.swift */; };
 		BF49FB4C5D038A93FD247A78 /* RecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B604B8A5E915BF5AE6A5EE9 /* RecordingsListView.swift */; };
+		D0F64C17E48CDD00AFEDF9D0 /* SyncStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09561ED71D83A4DA0AAE7258 /* SyncStateManager.swift */; };
 		D7F34728CF7D4E98AE6A6512 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C0BB49A71B2BB1BCE267F /* ContentView.swift */; };
 		DA188C3AE0198AB4DA5187AD /* FileChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3034C07E92FEC197CDCE5E6E /* FileChecksumTests.swift */; };
 		E4DE55C7D45189851A9B908F /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95FDAFB5EB0758871568F6 /* RecordingView.swift */; };
@@ -41,6 +46,7 @@
 		E947EE39B0F5EE7AE3891EDC /* FileChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04916126E45E39821092CFD /* FileChecksum.swift */; };
 		EA2157FDA558B365D52CFC98 /* WatchConnectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A866E0C9A61B1F9E1A2B249 /* WatchConnectionStatusView.swift */; };
 		EB69A2BECECE4C1BE9C1E3E2 /* WatchConnectivityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */; };
+		EE2D17EECDC9E9174FA27E28 /* SyncMessageParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEFEDF24ED41040B726575 /* SyncMessageParserTests.swift */; };
 		FF55A2ADA66C4B7498943A1D /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22DD94BC7818D33BB25B08F /* WatchConnectivityManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		006077E7154A7E1E582B6360 /* PhoneSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSyncManager.swift; sourceTree = "<group>"; };
+		09561ED71D83A4DA0AAE7258 /* SyncStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStateManager.swift; sourceTree = "<group>"; };
 		19938B184A7846129DC25B94 /* SyncMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessageTests.swift; sourceTree = "<group>"; };
 		1A866E0C9A61B1F9E1A2B249 /* WatchConnectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectionStatusView.swift; sourceTree = "<group>"; };
 		1B604B8A5E915BF5AE6A5EE9 /* RecordingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsListView.swift; sourceTree = "<group>"; };
@@ -71,11 +78,13 @@
 		2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityConstants.swift; sourceTree = "<group>"; };
 		23C0C98B65977556474EDAAD /* AudioRecorderServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderServiceTests.swift; sourceTree = "<group>"; };
 		3034C07E92FEC197CDCE5E6E /* FileChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChecksumTests.swift; sourceTree = "<group>"; };
+		30BE3C6B682BD5713D8E705B /* SyncMessageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessageParser.swift; sourceTree = "<group>"; };
 		35DE555859B358774C33115E /* LifeAdminWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeAdminWatchApp.swift; sourceTree = "<group>"; };
 		3F9D4E47E75A133B6F23231C /* SyncMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessage.swift; sourceTree = "<group>"; };
 		41BA6781B254AE425C1FDE27 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		492531A81F7A327473CD7F65 /* RecordingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingIntent.swift; sourceTree = "<group>"; };
 		56A0131F6F0B756227016782 /* LifeAdminTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeAdminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59EEFEDF24ED41040B726575 /* SyncMessageParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessageParserTests.swift; sourceTree = "<group>"; };
 		650DE0FE34CFD7A02DE738A2 /* RecordingIdGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingIdGeneratorTests.swift; sourceTree = "<group>"; };
 		6AB621817D2526B1C1EEC926 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		7083D673664895B770CB8143 /* AudioRecordingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingTests.swift; sourceTree = "<group>"; };
@@ -87,6 +96,7 @@
 		AF1B5B1549DC50006C70034A /* AudioRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderService.swift; sourceTree = "<group>"; };
 		BA95FDAFB5EB0758871568F6 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		C277D6B5C1DA77B8D2C1B225 /* AudioRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecording.swift; sourceTree = "<group>"; };
+		C55FE7A7462F53F1067ACAE0 /* SyncStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStateManagerTests.swift; sourceTree = "<group>"; };
 		D22DD94BC7818D33BB25B08F /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		D6966F8BA9D9257723248631 /* WatchRecordingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRecordingsStore.swift; sourceTree = "<group>"; };
 		DA83CA5859003470DACBA460 /* LifeAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeAdminApp.swift; sourceTree = "<group>"; };
@@ -174,6 +184,8 @@
 		601BE6EF33E7CBD1C562EF28 /* WatchConnectivity */ = {
 			isa = PBXGroup;
 			children = (
+				30BE3C6B682BD5713D8E705B /* SyncMessageParser.swift */,
+				09561ED71D83A4DA0AAE7258 /* SyncStateManager.swift */,
 				2252833BA2DFE418E471947D /* WatchConnectivityConstants.swift */,
 			);
 			path = WatchConnectivity;
@@ -295,6 +307,8 @@
 			children = (
 				AB1AD2C55806543E38B3EB6E /* AudioPlayerServiceTests.swift */,
 				23C0C98B65977556474EDAAD /* AudioRecorderServiceTests.swift */,
+				59EEFEDF24ED41040B726575 /* SyncMessageParserTests.swift */,
+				C55FE7A7462F53F1067ACAE0 /* SyncStateManagerTests.swift */,
 				EC7543CC97519954FB6EF88E /* WatchConnectivityConstantsTests.swift */,
 			);
 			path = Services;
@@ -446,6 +460,8 @@
 				33D4A23C85DC0EF0536D3F5E /* RecordingView.swift in Sources */,
 				BF49FB4C5D038A93FD247A78 /* RecordingsListView.swift in Sources */,
 				124F100E554BC09BFFD4F180 /* SyncMessage.swift in Sources */,
+				9BC712B43EFE8683E37546FB /* SyncMessageParser.swift in Sources */,
+				394DD1E9797EDF7A9688F007 /* SyncStateManager.swift in Sources */,
 				EA2157FDA558B365D52CFC98 /* WatchConnectionStatusView.swift in Sources */,
 				EB69A2BECECE4C1BE9C1E3E2 /* WatchConnectivityConstants.swift in Sources */,
 				FF55A2ADA66C4B7498943A1D /* WatchConnectivityManager.swift in Sources */,
@@ -465,6 +481,8 @@
 				2E5DA775443A66960AFFFC5A /* RecordingIntent.swift in Sources */,
 				E4DE55C7D45189851A9B908F /* RecordingView.swift in Sources */,
 				5A917936920999CCA41BFFA2 /* SyncMessage.swift in Sources */,
+				510DC1BC0D469F2ECA7DB028 /* SyncMessageParser.swift in Sources */,
+				D0F64C17E48CDD00AFEDF9D0 /* SyncStateManager.swift in Sources */,
 				A723D44CC27B84BC95C69660 /* WatchConnectivityConstants.swift in Sources */,
 				E566294F77381589EDF774BA /* WatchMainView.swift in Sources */,
 				5365228353C15C46D79E9615 /* WatchRecordingsListView.swift in Sources */,
@@ -482,7 +500,9 @@
 				DA188C3AE0198AB4DA5187AD /* FileChecksumTests.swift in Sources */,
 				7EDC4F0F3A51C21E6728BFDB /* MockFileManager.swift in Sources */,
 				7B1EDF5D96E8385ACD2A0FED /* RecordingIdGeneratorTests.swift in Sources */,
+				EE2D17EECDC9E9174FA27E28 /* SyncMessageParserTests.swift in Sources */,
 				BBCFC3E378308E75F1E3FC24 /* SyncMessageTests.swift in Sources */,
+				0F4F72ED0011166E72C92B37 /* SyncStateManagerTests.swift in Sources */,
 				53434F4312EAFF1DE5F65DA4 /* TestHelpers.swift in Sources */,
 				6E5310014C7314C73275D151 /* WatchConnectivityConstantsTests.swift in Sources */,
 			);
