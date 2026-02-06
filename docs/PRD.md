@@ -103,56 +103,129 @@ This document captures key design decisions and requirements for the LifeAdmin a
 
 ### 3.3 Auto-Sync Protocol
 
-**Requirement:** Pending recordings must sync automatically when connectivity is restored, without polling or manual intervention.
+**Requirement:** Pending recordings must sync automatically when connectivity is restored, without manual intervention and with minimal battery impact.
 
 **Rationale:**
 - Users shouldn't need to manually trigger sync
-- Polling would drain Watch battery
+- Constant polling would drain Watch battery
 - Must handle app restarts gracefully (pending state persisted to disk)
+- Must not get stuck if events fail to fire
 
-**Protocol Design - Event-Driven with Defensive Fallback:**
+#### Sync Trigger Hierarchy
 
-| Trigger | Type | When It Fires | Action |
-|---------|------|---------------|--------|
-| `activationDidCompleteWith` | Event | App starts, session activates | Schedule auto-sync |
-| `sessionReachabilityDidChange` | Event | Phone becomes reachable | Schedule auto-sync (if transition from unreachable→reachable) |
-| `scenePhase → .active` | Event | App comes to foreground | Schedule auto-sync |
-| 5-minute timer | Fallback | Every 5 min while pending items exist | Retry sync |
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         SYNC TRIGGERS                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  PRIMARY (Event-Driven) - No battery cost when idle             │
+│  ───────────────────────────────────────────────────            │
+│  1. activationDidCompleteWith  → App launched                   │
+│  2. sessionReachabilityDidChange → Phone became reachable       │
+│  3. scenePhase → .active       → User raised wrist/opened app   │
+│                                                                 │
+│  FALLBACK (Defensive Timer) - Only when pending items exist     │
+│  ───────────────────────────────────────────────────────────    │
+│  4. 5-minute timer             → Catches stuck states           │
+│     └── Auto-stops when pendingSync becomes empty               │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-**Why These Events:**
-- `activationDidCompleteWith`: Handles app restart case. If app was terminated with pending syncs, this re-queues them.
-- `sessionReachabilityDidChange`: Handles connectivity restoration. When Watch regains contact with iPhone, pending syncs resume.
-- `scenePhase`: Handles missed events while backgrounded. User raising wrist triggers sync check.
+#### Trigger Details
 
-**Why the Fallback Timer:**
-Edge cases where events might not fire:
-- Session gets into stale state
-- Phone was already reachable on launch (no transition event)
-- Bluetooth glitch where reachability doesn't update
+| Trigger | Type | When It Fires | Why It's Needed |
+|---------|------|---------------|-----------------|
+| `activationDidCompleteWith` | Event | App starts, session activates | Recover from app termination - re-queue lost transfers |
+| `sessionReachabilityDidChange` | Event | Phone becomes reachable | Resume sync after connectivity gap (user returns with phone) |
+| `scenePhase → .active` | Event | App comes to foreground | Catch missed events while backgrounded |
+| 5-minute timer | Fallback | Every 5 min while pending | Prevent stuck state from edge cases |
 
-The timer ONLY runs when `pendingSync` is non-empty, and automatically stops when all recordings are synced. This prevents battery drain when there's nothing to sync.
+#### Why the Fallback Timer?
 
-**Efficiency Measures:**
+The primary triggers are event-driven and have zero battery cost when idle. However, edge cases exist where events don't fire:
 
-1. **No Polling**: Purely event-driven. No timers, no periodic checks.
+| Edge Case | What Happens | Timer Catches It |
+|-----------|--------------|------------------|
+| Stale WCSession | Session stops firing delegate methods | ✓ |
+| Already reachable on launch | No transition = no event | ✓ |
+| Bluetooth glitch | Reachability state not updated | ✓ |
+| Missed scenePhase | SwiftUI doesn't always fire | ✓ |
 
-2. **Debouncing** (0.5s): Rapid reconnect events are coalesced. If connectivity flaps, we don't spam sync attempts.
+**Timer Efficiency:**
+- ONLY runs when `pendingSync` is non-empty
+- Automatically stops when all recordings sync
+- 5-minute interval = max 288 checks/day (usually far fewer)
+- Most syncs happen via events; timer is rarely the trigger
 
-3. **Duplicate Prevention**: Before queuing a transfer, we check `WCSession.outstandingFileTransfers` to see if that recording is already in-flight. Avoids re-sending files the OS is already transferring.
+#### Efficiency Measures
 
-4. **Background-Reliable Transfers**: Uses `transferFile()` instead of `sendMessage()`:
-   - `sendMessage()` requires both apps active simultaneously
-   - `transferFile()` queues transfers for background delivery
-   - OS handles network-level retries automatically
-   - Survives app suspension (but not termination)
+1. **Debouncing (0.5s)**: Rapid events are coalesced. Connectivity flapping doesn't spam sync attempts.
 
-**Why Not Use `sendMessage()`:**
-- Requires iPhone app to be reachable at the exact moment of send
-- Watch app may be suspended before delivery completes
-- Not suitable for large audio files
+2. **Duplicate Prevention**: Before queuing, checks `WCSession.outstandingFileTransfers`. Skips recordings already in-flight.
+
+3. **Conditional Timer**: Fallback timer only active when needed, not constantly running.
+
+4. **Background-Reliable Transfers**: Uses `transferFile()` not `sendMessage()`:
+
+| Method | Requirement | Survives Suspension | Large Files |
+|--------|-------------|---------------------|-------------|
+| `sendMessage()` | Both apps active | No | No |
+| `transferFile()` | Neither app active | Yes | Yes |
+
+#### Sync Flow
+
+```
+Watch records audio offline
+         │
+         ▼
+┌─────────────────────────────┐
+│ Save to pendingSync (disk)  │
+│ Attempt transferFile()      │──── Phone nearby? ──▶ Transfer queued
+└─────────────────────────────┘                      (OS delivers in background)
+         │
+         │ Phone not nearby
+         ▼
+┌─────────────────────────────┐
+│ Recording waits in          │
+│ pendingSync on disk         │
+│                             │
+│ Fallback timer starts       │
+│ (if not already running)    │
+└─────────────────────────────┘
+         │
+         │ Later: phone comes nearby
+         ▼
+┌─────────────────────────────┐
+│ EVENT fires:                │
+│ - reachabilityDidChange, or │
+│ - scenePhase → .active, or  │
+│ - 5-min timer tick          │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│ scheduleAutoSync()          │
+│ - Debounce 0.5s             │
+│ - Check outstandingTransfers│
+│ - Queue pending recordings  │
+└─────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│ OS delivers to iPhone       │
+│ iPhone verifies checksum    │
+│ iPhone sends confirmation   │
+│ Watch removes from pending  │
+│                             │
+│ If pendingSync empty:       │
+│ └── Stop fallback timer     │
+└─────────────────────────────┘
+```
 
 **Key Files:**
-- `LifeAdmin Watch App/Services/PhoneSyncManager.swift` - Auto-sync implementation
+- `LifeAdmin Watch App/Services/PhoneSyncManager.swift` - All sync logic
+- `LifeAdmin Watch App/App/LifeAdminWatchApp.swift` - scenePhase observer
 
 ## 4. Security Considerations
 
@@ -171,4 +244,4 @@ The timer ONLY runs when `pendingSync` is non-empty, and automatically stops whe
 ---
 
 *Last updated: 2026-02-06*
-*Version: 1.2 - Added fallback timer and foreground sync trigger*
+*Version: 1.3 - Comprehensive auto-sync protocol documentation*
