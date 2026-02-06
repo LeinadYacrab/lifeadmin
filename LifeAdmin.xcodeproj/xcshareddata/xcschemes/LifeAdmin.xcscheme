@@ -35,6 +35,20 @@
                ReferencedContainer = "container:LifeAdmin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6411E638DF74AC3FFC8C6A24"
+               BuildableName = "LifeAdminTests.xctest"
+               BlueprintName = "LifeAdminTests"
+               ReferencedContainer = "container:LifeAdmin.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -53,6 +67,17 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6411E638DF74AC3FFC8C6A24"
+               BuildableName = "LifeAdminTests.xctest"
+               BlueprintName = "LifeAdminTests"
+               ReferencedContainer = "container:LifeAdmin.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

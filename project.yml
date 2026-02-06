@@ -65,16 +65,32 @@ targets:
       properties:
         com.apple.developer.watchkit.extended-runtime-session: true
 
+  LifeAdminTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: LifeAdminTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lifeadmin.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "5.0"
+    dependencies:
+      - target: LifeAdmin
+
 schemes:
   LifeAdmin:
     build:
       targets:
         LifeAdmin: all
         LifeAdmin Watch App: all
+        LifeAdminTests: [test]
     run:
       config: Debug
     test:
       config: Debug
+      targets:
+        - LifeAdminTests
     profile:
       config: Release
     analyze:
